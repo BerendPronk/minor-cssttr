@@ -9,4 +9,4 @@ https://berendpronk.github.io/minor/
 ##Week 1
 
 ***Living styleguides***  
-https://github.com/BerendPronk/minor-cssttr
+https://github.com/BerendPronk/minor-cssttr (needs to be moved)
