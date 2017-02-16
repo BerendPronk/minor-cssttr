@@ -23,33 +23,53 @@ $color-white:			#f2f2f2;
 	unicode-range: U+26;
 }
 
-.clear {
-	display: block;
-	content: "";
-	clear: both;
-}
+
 
 body {
 	max-width: 100vw;
 	overflow-x: hidden;
 	margin: 0;
-	padding: 1rem;
+	padding: 1em;
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 16px;
 	color: $color-black;
+	cursor: url('../img/cursor-default.png') 0 5, auto;
+	background: linear-gradient(90deg, #85e0cc 13px, transparent 0),
+		linear-gradient(90deg, #33ccaa 29px, transparent 0),
+		linear-gradient(90deg, #1f7a66 47px, transparent 0);
+		background-size: 53px 2em, 71px 2em, 97px 2em;
+	background-repeat: repeat-x;
 
 	@media (min-width: 40em) {
 		padding: 4rem;
 		padding-left: calc(100vw / 6);
+		background-size: 53px 4em, 71px 4em, 97px 4em;
 	}
 
 	@media (min-width: 100em) {
-		display: grid;
-		grid-template-columns: calc(100% / 3) calc(100% / 3) calc(100% / 3);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
 		padding: 4rem;
+
+		@supports (display: grid) {
+			display: grid;
+			grid-template-columns: calc(100% / 3) calc(100% / 3) calc(100% / 3);
+			align-items: initial;
+		}
 	}
 
 	&.focus-outline {
+
+		&::before {
+			display: block;
+			margin-top: 2em;
+			padding: 1em;
+			font-size: .9em;
+			color: $color-white;
+			background-color: $color-theme;
+			content: "You can navigate the page by just pressing the TAB key, if you desire.";
+		}
 
 		*:focus {
 			outline-width: .2rem;
@@ -65,6 +85,10 @@ body {
 
 		@media (min-width: 40em) {
 			font-size: 4em;
+		}
+
+		@media (min-width: 40em) {
+			width: 100%;
 		}
 	}
 
@@ -85,6 +109,28 @@ body {
 			margin-bottom: 2rem;
 			padding-bottom: 2rem;
 		}
+
+		@media (min-width: 100em) {
+			width: calc(100% / 3 - 4rem);
+			margin: 0 2rem 4rem;
+			border-bottom: none;
+
+			@supports (display: grid) {
+				width: initial;
+				border-bottom: 1px solid $color-grey;
+			}
+		}
+
+		h1 {
+
+			@media (min-width: 100em) {
+				margin-top: 0;
+
+				@supports (display: grid) {
+					margin-top: initial;
+				}
+			}
+		}
 	}
 }
 
@@ -100,8 +146,16 @@ h1 {
 	margin-bottom: 1em;
 
 	a {
-		position: relative;
 		text-decoration: underline;
+
+		&::after {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			content: "";
+		}
 
 		@media (min-width: 40em) {
 
@@ -125,30 +179,152 @@ p {
 	}
 }
 
-a {
-	color: $color-theme;
-	text-decoration: none;
-}
-
 ul, ol {
 	margin: 0;
 	padding: 0;
 }
 
+a, button, label, [type="radio"], [type="checkbox"], [type="submit"] {
+	cursor: url('../img/cursor-pointer.png') 5 3, pointer;
+}
+
+a {
+	color: $color-theme;
+	text-decoration: none;
+}
+
+button {
+	position: relative;
+	z-index: 1;
+	color: $color-white;
+	padding: .75rem 1rem;
+	font-size: 1.2rem;
+	cursor: pointer;
+	border: none;
+	background-color: $color-theme;
+
+	&::before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 100%;
+		bottom: 0;
+		z-index: -1;
+		content: "";
+		background-color: darken($color-theme, 20%);
+		transition: .1s ease;
+	}
+
+	&::after {
+		position: absolute;
+		top: -1em;
+		bottom: -1em;
+		left: -1em;
+		right: -1em;
+		content: "";
+	}
+
+	&:hover {
+
+		&::before {
+			right: 0;
+		}
+	}
+
+	@media (min-width: 40em) {
+		padding: .5rem .75rem;
+		font-size: 1rem;
+	}
+}
+
 form {
+
+	&:invalid {
+
+		[type="submit"] {
+			cursor: not-allowed;
+		}
+	}
+
+	&:valid {
+
+		[type="submit"] {
+			transform: scale(1);
+		}
+	}
 
 	label {
 		color: $color-black;
 	}
 
+	input, input + span, [type="submit"] {
+		transition: .1s ease;
+		transform-origin: left;
+	}
+
 	input {
 		display: block;
+		position: relative;
+		z-index: 2;
 		margin-top: .5rem;
 		margin-bottom: 1rem;
-		padding: .5rem;
+		padding: 1rem;
 		font-size: 1em;
 		border-radius: 0;
 		border: 1px solid $color-grey;
+
+		&:focus {
+
+			& + span {
+				transform: translate(338%, -7em);
+
+				@media (min-width: 40em) {
+					transform: translate(-2rem, -4.2rem);
+				}
+			}
+		}
+
+		&:invalid {
+			border-left: .25em #cc5e33 solid;
+
+			& + span {
+				background-color: #cc5e33;
+			}
+		}
+
+		&:valid {
+			border-left: .25em #33cc5e solid;
+
+			& + span {
+				background-color: #33cc5e;
+				transform: translate(338%, -7em);
+
+				@media (min-width: 40em) {
+					transform: translate(-2rem, -4.2rem);
+				}
+			}
+		}
+
+		& + span {
+			position: absolute;
+			z-index: 1;
+			padding: .9em 1.2em;
+			border-radius: .5em .5em 0 0;
+			transform: translate(330%, -4.2rem);
+
+			@media (min-width: 40em) {
+				padding: .9em .45em;
+				padding-right: 2em;
+				border-radius: .5em 0 0 .5em;
+				transform: translate(0, -4.2rem);
+			}
+
+			svg {
+				width: auto;
+				height: 1em;
+				fill: $color-white;
+			}
+		}
 	}
 
 	[type="checkbox"] {
@@ -157,12 +333,11 @@ form {
 		opacity: 0;
 
 		&:focus + label {
-			@extend *:focus
+			@extend *:focus;
 		}
 
 		& + label {
 			position: relative;
-			cursor: pointer;
 			left: 2em;
 
 			&::before, &::after {
@@ -237,38 +412,10 @@ form {
 		}
 	}
 
-	button {
-		position: relative;
-		z-index: 1;
-		color: $color-white;
-		padding: .75rem 1rem;
-		font-size: 1.2rem;
-		cursor: pointer;
-		border: none;
-		background-color: $color-theme;
-
-		&::before {
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 100%;
-			bottom: 0;
-			z-index: -1;
-			content: "";
-			background-color: darken($color-theme, 20%);
-			transition: .1s ease;
-		}
-
-		&:hover {
-
-			&::before {
-				right: 0;
-			}
-		}
+	[type="submit"] {
 
 		@media (min-width: 40em) {
-			padding: .5rem .75rem;
-			font-size: 1rem;
+			transform: scale(.8);
 		}
 	}
 }
@@ -347,7 +494,7 @@ legend {
 							content: "▼";
 						}
 
-						&:hover li, &:focus li {
+						&:hover li, &:focus li, &.open-menu li {
 							opacity: 1;
 							transform: translateY(0);
 							transition: .3s ease;
@@ -416,6 +563,11 @@ legend {
 		img {
 			position: static;
 			transform: translateX(0);
+			transition: .1s ease;
+
+			&:hover {
+				transform: translateX(0) scale(1.05);
+			}
 		}
 
 		&:target {
@@ -441,6 +593,7 @@ legend {
 #media-item {
 
 	article {
+		position: relative;
 
 		&::after {
 			@extend .clear;
@@ -668,7 +821,6 @@ legend {
 		width: 40%;
 		margin-right: .5rem;
 		margin-bottom: 2rem;
-		cursor: pointer;
 		text-align: center;
 
 		@media (min-width: 40em) {
@@ -712,7 +864,7 @@ legend {
 
 }
 
-#tests {
+#general {
 
 	ul {
 		display: flex;
@@ -739,4 +891,57 @@ legend {
 			margin-right: 0;
 		}
 	}
+}
+
+#loading {
+
+	ul {
+		display: flex;
+
+		li {
+			list-style-type: none;
+			margin-right: 2rem;
+
+			&:last-of-type {
+				margin-right: 0;
+			}
+		}
+	}
+
+	i {
+		display: block;
+		width: 128px;
+		height: 128px;
+		overflow: hidden;
+		text-indent: 200%;
+		background: url('../img/loader.png') 0 0;
+		animation: png-loader 1s infinite steps(8);
+
+		@keyframes png-loader {
+			to { background-position: -1024px 0 }
+		}
+	}
+
+	circle {
+		fill: none;
+		stroke: $color-theme;
+		stroke-width: .2em;
+		stroke-linecap: round;
+		stroke-dasharray: 252;
+		stroke-dashoffset: 0;
+		transform: rotate(-90deg);
+		transform-origin: center;
+		animation: svg-loader 2s ease-in-out infinite alternate;
+
+		@keyframes svg-loader {
+			to { stroke-dashoffset: 252; }
+		}
+
+	}
+}
+
+.clear {
+	display: block;
+	content: "";
+	clear: both;
 }

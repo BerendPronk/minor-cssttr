@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
 
+	<link rel="icon" type="image/png" href="assets/img/favicon.png">
 	<title>CSSTTR - Living Styleguide</title>
 
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700|Oswald|Playfair+Display+SC" rel="stylesheet">
@@ -20,11 +21,31 @@
 			<fieldset>
 				<label for="field-email">Email</label>
 				<input type="email" id="field-email" name="field-email" autocomplete="email" required autofocus>
+				<span>
+					<svg viewBox="0 0 171.2 188.9">
+						<path class="st0" d="M171,90.2c-0.6,14.9-5.1,27.7-13.4,38.6s-20.7,16.3-37.2,16.3c-5.5,0-10.2-1.5-14.2-4.6s-6.8-7.4-8.4-13
+							c-2.8,5.7-6.3,10.1-10.5,12.9c-4.2,2.9-9.2,4.3-14.9,4.3c-10.1,0-17.8-4-23.1-12s-7.3-18.6-5.9-31.9c1.8-17,6.7-30.5,14.9-40.8
+							c8.1-10.2,18-15.3,29.7-15.3c8.2,0,14.7,0.9,19.7,2.6c5,1.8,10.4,4.5,16.4,8.1l-0.3,0.4h0.5l-5.2,57.4c-0.3,5.9,0.1,9.9,1.2,12.1
+							c1.1,2.2,2.6,3.3,4.5,3.3c7.6,0,13.6-3.6,18.2-10.9c4.6-7.3,7.1-16.4,7.7-27.5c1.1-22.9-3.4-40.8-13.5-53.6
+							c-10.1-12.8-25.6-19.2-46.6-19.2c-20.4,0-36.6,6.9-48.7,20.7S23.3,70.7,22.3,94.5c-1.1,23.2,3.7,41.5,14.6,54.9s26.6,20.2,47,20.2
+							c5.7,0,11.6-0.6,17.7-1.9c6.1-1.3,11.4-2.8,15.9-4.7l3.9,16.8c-4.5,2.8-10.3,5.1-17.3,6.6c-7,1.6-13.8,2.4-20.5,2.4
+							c-27.3,0-48.3-8.4-63.1-25.2S-1,123.7,0.1,94.5c1.2-29,9.9-52,26.2-69C42.5,8.5,64.1,0,91,0c26.4,0,46.6,8,60.7,24.1
+							C165.6,40.2,172.1,62.2,171,90.2z M68.7,100.8c-0.6,8.1,0,14.2,1.8,18.4c1.8,4.2,4.7,6.2,8.8,6.2c3.6,0,6.9-1,9.8-3
+							c2.9-2,5.4-5.8,7.6-11.3l4.1-45.8c-1.5-0.3-2.9-0.6-4.4-0.9c-1.4-0.2-2.8-0.4-4.3-0.4c-7,0-12.4,3.1-16.1,9.2
+							C72.2,79.4,69.8,88.5,68.7,100.8z"/>
+					</svg>
+				</span>
 			</fieldset>
 
 			<fieldset>
 				<label for="field-password">Password</label>
-				<input type="password" id="field-password" name="field-password" required>
+				<input type="password" id="field-password" name="field-password" pattern=".{6,}" title="Minimum of 6 characters required" required>
+				<span>
+					<svg viewBox="0 0 171.2 188.9">
+						<path class="st0" d="M171.2,83.3C170.7,37.2,132.6,0,85.6,0S0.5,37.2,0,83.3h0v105.6h171.2V83.3z M85.6,20c35.8,0,65,28.3,65.4,63.3
+						H20.2C20.6,48.3,49.8,20,85.6,20z"/>
+					</svg>
+				</span>
 			</fieldset>
 
 			<fieldset>
@@ -48,12 +69,12 @@
 			<ul>
 				<li><a href="#main-content" aria-label="Home, current page">Home</a></li>
 				<li data-menu="has-sub">
-					<a href="/products">Products</a>
+					<a href="/products" data-menu="has-sub"tabindex="0">Products</a>
 
 					<ul>
-						<li><a href="/products/rock">Rock</a></li>
-						<li><a href="/products/paper">Paper</a></li>
-						<li><a href="/products/scissors">Scissors</a></li>
+						<li><a href="/products/rock" tabindex="0">Rock</a></li>
+						<li><a href="/products/paper" tabindex="0">Paper</a></li>
+						<li><a href="/products/scissors" tabindex="0">Scissors</a></li>
 					</ul>
 
 				</li>
@@ -205,7 +226,7 @@
 		</fieldset>
 	</section>
 
-	<section id="tests">
+	<section id="general">
 		<h1>Ampersand & Sibling count</h1>
 		<ul>
 			<li>1</li>
@@ -221,10 +242,26 @@
 		</ul>
 	</section>
 
+	<section id="loading">
+		<h1>Loading spinners</h1>
+		<ul>
+			<li>
+				<i>Loading...</i>
+			</li>
+			<li>
+				<svg height="128" width="128">
+					<circle cx="64" cy="64" r="40" />
+				</svg>
+			</li>
+		</ul>
+	</section>
+
 	<script>
 		var body = document.querySelector('body');
+		var menu = document.querySelectorAll('nav > ul > li');
+		var hasSub = document.querySelectorAll('[data-menu="has-sub"]');
 
-		window.addEventListener('keyup', function(e) {
+		window.addEventListener('keydown', function(e) {
 			if (e.keyCode === 9 || e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) {
 				if (!body.classList.contains('focus-outline')) {
 					body.classList.add('focus-outline');
@@ -232,12 +269,29 @@
 			}
 		});
 
-		window.addEventListener('click', function() {
+		window.addEventListener('mousedown', function() {
 			body.classList.remove('focus-outline');
 
 			if (location.hash.indexOf("img") != -1) {
 				window.history.back();
 			}
+		});
+
+		menu.forEach(function(label) {
+			var anchor = label.querySelector('a');
+
+			anchor.addEventListener('focus', function() {
+
+				if (anchor.getAttribute("data-menu") == "has-sub") {
+
+					label.classList.add('open-menu');
+				} else {
+					hasSub.forEach(function(subMenu) {
+						subMenu.classList.remove('open-menu');
+					});
+					console.log('NO')
+				}
+			});
 		});
 	</script>
 
