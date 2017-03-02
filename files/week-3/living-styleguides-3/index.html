@@ -16,6 +16,49 @@
 
 	<h1>Living Styleguide</h1>
 
+	<section id="loading">
+		<ul>
+			<li>
+				<i>Loading...</i>
+			</li>
+			<li>
+				<svg height="128" width="128">
+					<circle cx="64" cy="64" r="40" />
+				</svg>
+			</li>
+		</ul>
+	</section>
+
+	<section id="navigation">
+		<nav>
+
+			<h1>Main navigation</h1>
+
+			<ul>
+				<li><a href="#main-content" aria-label="Home, current page">Home</a></li>
+				<li data-menu="has-sub">
+					<a href="#" data-menu="has-sub"tabindex="0">Components</a>
+
+					<ul>
+						<li><a href="#picture-with-subtitle" tabindex="0">Picture with title</a></li>
+						<li><a href="#media-item" tabindex="0">Media items</a></li>
+						<li><a href="#step-indicator" tabindex="0">Progress bar</a></li>
+						<li><a href="#rating" tabindex="0">Rating</a></li>
+						<li><a href="#general" tabindex="0">Ampersand & Sibling count</a></li>
+					</ul>
+
+				</li>
+				<li><a href="#chat">Chat</a></li>
+				<li><a href="#login">Login</a></li>
+			</ul>
+
+		</nav>
+	</section>
+
+	<section id="main-content">
+		<a href="https://berendpronk.github.io/minor/cssttr/files/week-2/living-styleguides-2/">See the entire list of components</a>
+	</section>
+
 	<section id="login">
 		<form action="/" method="post">
 			<fieldset>
@@ -61,45 +104,31 @@
 		</form>
 	</section>
 
-	<section id="navigation">
-		<nav>
-
-			<h1>Main navigation</h1>
-
-			<ul>
-				<li><a href="#main-content" aria-label="Home, current page">Home</a></li>
-				<li data-menu="has-sub">
-					<a href="/products" data-menu="has-sub"tabindex="0">Products</a>
-
-					<ul>
-						<li><a href="/products/rock" tabindex="0">Rock</a></li>
-						<li><a href="/products/paper" tabindex="0">Paper</a></li>
-						<li><a href="/products/scissors" tabindex="0">Scissors</a></li>
-					</ul>
-
-				</li>
-				<li><a href="/about">About</a></li>
-				<li><a href="/contact">Contact</a></li>
-			</ul>
-
-		</nav>
-	</section>
-
 	<section id="picture-with-subtitle">
 		<article>
 			<h1>This picture has a title</h1>
 			<figure>
-				<!-- Portrait -->
-				<!--
-				<a id="imgPortrait" href="#imgPortrait">
-					<img src="https://vasilis.nl/voto/fotos/klein/170126170241-we-hebben-een-bortusk-1280.jpg" alt="A drawing of a colorful monster on a newspaper" />
-				</a>
-				-->
-
 				<!-- Landscape -->
 					<a id="imgLandscape" href="#imgLandscape">
 						<img src="https://vasilis.nl/voto/fotos/klein/161001174911-verhuizen-1280.jpg" alt="A bulldozer transporting a beach house along a sunny beach" />
 					</a>
+			</figure>
+			<figcaption>
+				<p>
+					There's also this big and in depth description of the picture. You often see this on newssites or photo blogs. You could also replace the photo with a video if needed.
+				</p>
+				<footer>
+					<time datetime="2017-02-06">6-2-2017</time> © 2017 <a href="https://vasilis.nl">Vasilis van Gemert</a>
+				</footer>
+			</figcaption>
+		</article>
+		<article>
+			<h1>This picture has a title</h1>
+			<figure>
+				<!-- Portrait -->
+				<a id="imgPortrait" href="#imgPortrait">
+					<img src="https://vasilis.nl/voto/fotos/klein/170126170241-we-hebben-een-bortusk-1280.jpg" alt="A drawing of a colorful monster on a newspaper" />
+				</a>
 			</figure>
 			<figcaption>
 				<p>
@@ -256,24 +285,23 @@
 		</ul>
 	</section>
 
-	<section id="loading">
-		<h1>Loading spinners</h1>
-		<ul>
-			<li>
-				<i>Loading...</i>
-			</li>
-			<li>
-				<svg height="128" width="128">
-					<circle cx="64" cy="64" r="40" />
-				</svg>
-			</li>
-		</ul>
-	</section>
-
 	<script>
 		var body = document.querySelector('body');
+		var loading = document.querySelector('#loading');
 		var menu = document.querySelectorAll('nav > ul > li');
 		var hasSub = document.querySelectorAll('[data-menu="has-sub"]');
+
+		setTimeout(function() {
+			loading.classList.add('hidden');
+		}, 2500);
+
+		window.addEventListener('hashchange', function() {
+			hasSub[0].classList.remove('open-menu');
+
+			if (window.location.hash.indexOf('img') != -1) {
+				document.querySelector('#picture-with-subtitle').style.display = 'block';
+			}
+		});
 
 		window.addEventListener('keydown', function(e) {
 			if (e.keyCode === 9 || e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) {
@@ -295,6 +323,18 @@
 		menu.forEach(function(label) {
 			var anchor = label.querySelector('a');
 			var subMenu = label.querySelectorAll('li');
+
+			if (anchor.textContent === 'Home') {
+				label.style.borderBottom = '.1rem solid #33ccaa';
+			}
+
+			label.addEventListener('click', function() {
+				menu.forEach(function(label) {
+					label.style.borderBottom = 'none';
+				})
+
+				this.style.borderBottom = '.1rem solid #33ccaa';
+			})
 
 			anchor.addEventListener('focus', function() {
 				if (anchor.getAttribute("data-menu") == "has-sub") {
