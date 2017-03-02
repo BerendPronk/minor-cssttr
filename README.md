@@ -15,3 +15,8 @@ https://github.com/BerendPronk/minor-cssttr/tree/master/files/week-1/living-styl
 
 ***Living styleguides 2***  
 https://github.com/BerendPronk/minor-cssttr/tree/master/files/week-2/living-styleguides-2
+
+##Week 3
+
+***Living styleguides 3***  
+https://github.com/BerendPronk/minor-cssttr/tree/master/files/week-3/living-styleguides-3
